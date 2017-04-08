@@ -1,4 +1,4 @@
-Starter files for email alert middleware challenge
+Email alert middleware challenge
 ===================================================
 
 https://github.com/Thinkful-Ed/node-email-alert-middleware-challenge-starter
