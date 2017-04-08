@@ -32,7 +32,7 @@ app.get('*', russianRoulette);
 // YOUR MIDDLEWARE FUNCTION should be activated here using
 // `app.use()`. It needs to come BEFORE the `app.use` call
 // below, which sends a 500 and error message to the client
-function running(err, req, res, next) => {
+function running(err, req, res, next) {
   if(err === FooError || err === BarError){ 
     sendEmail(emailData);
   }
@@ -41,12 +41,13 @@ function running(err, req, res, next) => {
   }
 };
 
+app.use(running);
+
 app.use((err, req, res, next) => {
   logger.error(err);
   res.status(500).json({error: 'Something went wrong'}).end();
 });
 
-app.use(running);
 
 const port = process.env.PORT || 8080;
 
