@@ -8,10 +8,10 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const {logger} = require('./utilities/logger');
+const {sendEmail} = require('./emailer');
+const {emailData} = require('./emailer');
 // these are custom errors we've created
 const {FooError, BarError, BizzError} = require('./errors');
-
-const {sendEmail, emailData} = require('./emailer');
 
 const app = express();
 
@@ -32,7 +32,9 @@ app.get('*', russianRoulette);
 // `app.use()`. It needs to come BEFORE the `app.use` call
 // below, which sends a 500 and error message to the client
 function running(err, req, res, next) {
-  if(err === FooError || err === BarError){ 
+  console.log('error= ' + err);
+  console.log(FooError)
+  if(err instanceof FooError || err instanceof BarError){ 
     sendEmail(emailData);
   }
   else{
