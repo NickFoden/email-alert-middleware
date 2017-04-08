@@ -11,8 +11,7 @@ const {logger} = require('./utilities/logger');
 // these are custom errors we've created
 const {FooError, BarError, BizzError} = require('./errors');
 
-const sendEmail = require('./emailer');
-const emailData = require('./emailer');
+const {sendEmail, emailData} = require('./emailer');
 
 const app = express();
 
@@ -47,7 +46,6 @@ app.use((err, req, res, next) => {
   logger.error(err);
   res.status(500).json({error: 'Something went wrong'}).end();
 });
-
 
 const port = process.env.PORT || 8080;
 

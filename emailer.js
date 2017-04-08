@@ -8,7 +8,7 @@ const {logger} = require('./utilities/logger');
 const {SMTP_URL} = process.env;
 
 const emailData = {
-  from: "morganavelstop@gmail.com",
+  from: '"Service Alerts" <morganavelstop@gmail.com>',
   to:"nickfoden@gmail.com",
   subject:"We have an error",
   text:"Errors abound",
@@ -34,3 +34,4 @@ const sendEmail = (emailData, smtpUrl=SMTP_URL) => {
 
 
 module.exports = {sendEmail};
+module.exports = {emailData};
