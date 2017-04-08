@@ -8,7 +8,7 @@ const {logger} = require('./utilities/logger');
 const {SMTP_URL} = process.env;
 
 const emailData = {
-  from: '"Service Alerts" <morganavelstop@gmail.com>',
+  from: 'morganavelstop@gmail.com',
   to:'nickfoden@gmail.com',
   subject:'We have an error',
   text:'Errors abound',

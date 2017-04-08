@@ -8,12 +8,23 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const {logger} = require('./utilities/logger');
-const {sendEmail} = require('./emailer');
-const {emailData} = require('./emailer');
+//const {sendEmail} = require('./emailer');
+
 // these are custom errors we've created
 const {FooError, BarError, BizzError} = require('./errors');
 
 const app = express();
+const {SMTP_URL} = process.env;
+const nodemailer = require('nodemailer');
+
+const sendEmail = (emailData, smtpUrl=SMTP_URL) => {
+  const transporter = nodemailer.createTransport(SMTP_URL);
+  logger.info(`Attempting to send email from ${emailData.from}`);
+  return transporter
+    .sendMail(emailData)
+    .then(info => console.log(`Message sent: ${info.response}`))
+    .catch(err => console.log(`Problem sending email: ${err}`));
+}
 
 // this route handler randomly throws one of `FooError`,
 // `BarError`, or `BizzError`
@@ -31,15 +42,19 @@ app.get('*', russianRoulette);
 // YOUR MIDDLEWARE FUNCTION should be activated here using
 // `app.use()`. It needs to come BEFORE the `app.use` call
 // below, which sends a 500 and error message to the client
-function running(err, req, res, next) {
-  console.log('error= ' + err);
-  console.log(FooError)
+const running = (err, req, res, next) => {
+  console.log('error = ' + err);
   if(err instanceof FooError || err instanceof BarError){ 
+     const emailData = {
+      from: 'morganavelstop@gmail.com',
+      to:'nickfoden@gmail.com',
+      subject:'We have an error',
+      text:'Errors abound',
+      html:'<p>html of body</p>'
+    };
     sendEmail(emailData);
   }
-  else{
-    next();
-  }
+  next();
 };
 
 app.use(running);
