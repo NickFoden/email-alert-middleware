@@ -11,7 +11,8 @@ const {logger} = require('./utilities/logger');
 // these are custom errors we've created
 const {FooError, BarError, BizzError} = require('./errors');
 
-const sendEmail = require(`./emailer`);
+const sendEmail = require('./emailer');
+const emailData = require('./emailer');
 
 const app = express();
 
@@ -23,7 +24,6 @@ const russianRoulette = (req, res) => {
     Math.floor(Math.random() * errors.length)]('It blew up!');
 };
 
-
 app.use(morgan('common', {stream: logger.stream}));
 
 // for any GET request, we'll run our `russianRoulette` function
@@ -34,8 +34,11 @@ app.get('*', russianRoulette);
 // below, which sends a 500 and error message to the client
 
 app.use((err, req, res, next) => {
-  if (err === FooError || err === BarError){ 
+  if(err === FooError || err === BarError){ 
     sendEmail(emailData);
+  }
+  else{
+    next();
   }
 });
 

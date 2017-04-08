@@ -8,11 +8,11 @@ const {logger} = require('./utilities/logger');
 const {SMTP_URL} = process.env;
 
 const emailData = {
-  from: 'morganavelstop@gmail.com',
-  to:'nickfoden@gmail.com',
-  subject:'We have an error',
-  text:'Errors abound',
-  html:'<p>html of body</p>'
+  from: "morganavelstop@gmail.com",
+  to:"nickfoden@gmail.com",
+  subject:"We have an error",
+  text:"Errors abound",
+  html:"<p>html of body</p>"
 }
 
 // `emailData` is an object that looks like this:
